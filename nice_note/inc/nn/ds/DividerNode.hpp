@@ -34,11 +34,10 @@ namespace nn {
 namespace ds {
 
 struct DividerNode : public BaseNode {
-  DividerNode() : BaseNode("div") {}
+  DividerNode() : BaseNode("hr") {}
 
   std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << " class='horizontal-divider' />"
-                  << std::endl;
+    return stream << "<" << token << " />" << std::endl;
   }
 };
 

@@ -51,26 +51,15 @@ LexicalParser::~LexicalParser() {
 bool LexicalParser::parse() {
   while (std::getline(m_stream, m_line)) {
     ++m_lineNumber;
-    // std::cout << "[" << m_lineNumber << "] " << m_line << std::endl;
+    std::cerr << "[" << m_lineNumber << "] " << m_line << std::endl;
 
     std::shared_ptr<ds::BaseNode> node{nullptr};
-
-    node = m_headerParser->attemptParse(m_line);
-    if (node) {
-      m_nodes.emplace_back(node);
-      continue;
-    }
-
-    node = m_imageParser->attemptParse(m_line);
-    if (node) {
-      m_nodes.emplace_back(node);
-      continue;
-    }
-
-    node = m_dividerParser->attemptParse(m_line);
-    if (node) {
-      m_nodes.emplace_back(node);
-      continue;
+    for (auto& parser : m_parsers) {
+      node = parser->attemptParse(m_line);
+      if (node) {
+        m_nodes.emplace_back(node);
+        continue;
+      }
     }
   }
 

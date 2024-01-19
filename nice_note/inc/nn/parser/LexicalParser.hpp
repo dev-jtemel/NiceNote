@@ -28,9 +28,9 @@
 #include <string>
 
 #include "nn/ds/BaseNode.hpp"
+#include "nn/parser/DividerParser.hpp"
 #include "nn/parser/HeaderParser.hpp"
 #include "nn/parser/ImageParser.hpp"
-#include "nn/parser/DividerParser.hpp"
 
 namespace nn {
 namespace parser {
@@ -53,10 +53,9 @@ class LexicalParser {
   std::string m_filename{};
   std::ifstream m_stream{};
 
-  std::shared_ptr<HeaderParser> m_headerParser =
-      std::make_shared<HeaderParser>();
-  std::shared_ptr<ImageParser> m_imageParser = std::make_shared<ImageParser>();
-  std::shared_ptr<DividerParser> m_dividerParser = std::make_shared<DividerParser>();
+  std::vector<std::shared_ptr<BaseParser>> m_parsers{
+      std::make_shared<HeaderParser>(), std::make_shared<ImageParser>(),
+      std::make_shared<DividerParser>()};
 
   std::vector<std::shared_ptr<ds::BaseNode>> m_nodes{};
 };
