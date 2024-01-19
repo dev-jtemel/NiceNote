@@ -23,12 +23,14 @@
  */
 
 #include <fstream>
+#include <memory>
 #include <regex>
 #include <string>
-#include <memory>
 
 #include "nn/ds/BaseNode.hpp"
 #include "nn/parser/HeaderParser.hpp"
+#include "nn/parser/ImageParser.hpp"
+#include "nn/parser/DividerParser.hpp"
 
 namespace nn {
 namespace parser {
@@ -44,17 +46,19 @@ class LexicalParser {
   bool parse();
 
  private:
-  void clearState();
-
   size_t m_lineNumber{0U};
   std::string m_line{};
-  std::unique_ptr<ds::BaseNode> m_currentNode{nullptr};
   std::string m_content{};
 
   std::string m_filename{};
   std::ifstream m_stream{};
 
-  HeaderParser m_headerParser{};
+  std::shared_ptr<HeaderParser> m_headerParser =
+      std::make_shared<HeaderParser>();
+  std::shared_ptr<ImageParser> m_imageParser = std::make_shared<ImageParser>();
+  std::shared_ptr<DividerParser> m_dividerParser = std::make_shared<DividerParser>();
+
+  std::vector<std::shared_ptr<ds::BaseNode>> m_nodes{};
 };
 
 }  // namespace parser

@@ -47,6 +47,9 @@ class BaseParser {
  protected:
   std::regex m_regex{};
   std::smatch m_match{};
+
+ private:
+  std::regex c_emptyRegex{R"(^\s*$)"};
 };
 
 }  // namespace parser

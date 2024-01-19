@@ -22,31 +22,23 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__HEADER_NODE_HPP
-#define NN__DS__HEADER_NODE_HPP
+#ifndef NN__PARSER__DIVIDER_PARSER__HPP
+#define NN__PARSER__DIVIDER_PARSER__HPP
 
-#include <iostream>
-#include <string>
-
-#include "nn/ds/BaseNode.hpp"
+#include "nn/parser/BaseParser.hpp"
 
 namespace nn {
-namespace ds {
+namespace parser {
 
-struct HeaderNode : public BaseNode {
-  HeaderNode(size_t tier, std::string&& content_) : BaseNode("h"), content{content_} {
-    token.append(std::to_string(tier));
-  }
+class DividerParser : public BaseParser {
+ public:
+  DividerParser();
+  ~DividerParser() = default;
 
-  std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << ">" << content << "</" << token << ">"
-                  << std::endl;
-  }
-
-  std::string content{};
+  std::shared_ptr<ds::BaseNode> attemptParse(const std::string& line) override;
 };
 
-}  // namespace ds
+}  // namespace parser
 }  // namespace nn
 
-#endif  // NN__DS__HEADER_NODE_HPP
+#endif  // NN__PARSER__DIVIDER_PARSER__HPP

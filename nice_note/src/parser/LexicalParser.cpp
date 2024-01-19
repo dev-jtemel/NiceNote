@@ -40,16 +40,37 @@ LexicalParser::LexicalParser(const std::string& filename)
   }
 }
 
-LexicalParser::~LexicalParser() { m_stream.close(); }
+LexicalParser::~LexicalParser() {
+  m_stream.close();
+
+  for (auto& node : m_nodes) {
+    node->toHTML(std::cout);
+  }
+}
 
 bool LexicalParser::parse() {
   while (std::getline(m_stream, m_line)) {
     ++m_lineNumber;
-    std::cout << "[" << m_lineNumber << "] " << m_line << std::endl;
+    // std::cout << "[" << m_lineNumber << "] " << m_line << std::endl;
 
-    auto newNode = m_headerParser.attemptParse(m_line);
-    if (newNode) {
-      newNode->toHTML(std::cout);
+    std::shared_ptr<ds::BaseNode> node{nullptr};
+
+    node = m_headerParser->attemptParse(m_line);
+    if (node) {
+      m_nodes.emplace_back(node);
+      continue;
+    }
+
+    node = m_imageParser->attemptParse(m_line);
+    if (node) {
+      m_nodes.emplace_back(node);
+      continue;
+    }
+
+    node = m_dividerParser->attemptParse(m_line);
+    if (node) {
+      m_nodes.emplace_back(node);
+      continue;
     }
   }
 

@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__HEADER_NODE_HPP
-#define NN__DS__HEADER_NODE_HPP
+#ifndef NN__DS__DIVIDER_NODE_HPP
+#define NN__DS__DIVIDER_NODE_HPP
 
 #include <iostream>
 #include <string>
@@ -33,20 +33,16 @@
 namespace nn {
 namespace ds {
 
-struct HeaderNode : public BaseNode {
-  HeaderNode(size_t tier, std::string&& content_) : BaseNode("h"), content{content_} {
-    token.append(std::to_string(tier));
-  }
+struct DividerNode : public BaseNode {
+  DividerNode() : BaseNode("div") {}
 
   std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << ">" << content << "</" << token << ">"
+    return stream << "<" << token << " class='horizontal-divider' />"
                   << std::endl;
   }
-
-  std::string content{};
 };
 
 }  // namespace ds
 }  // namespace nn
 
-#endif  // NN__DS__HEADER_NODE_HPP
+#endif  // NN__DS__DIVIDER_NODE_HPP

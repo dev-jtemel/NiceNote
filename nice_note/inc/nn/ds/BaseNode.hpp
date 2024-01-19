@@ -33,11 +33,15 @@ namespace nn {
 namespace ds {
 
 struct BaseNode {
+  BaseNode() = default;
+  BaseNode(std::string&& token_) : token(token_) {}
   virtual ~BaseNode() {}
 
-  virtual std::ostream& toHTML(std::ostream& stream) {
-    return stream << "TODO" << std::endl;
-  }
+  virtual void appendContent(std::string&&) {}
+
+  virtual std::ostream& toHTML(std::ostream& stream) = 0;
+
+  std::string token{};
 };
 
 }  // namespace ds

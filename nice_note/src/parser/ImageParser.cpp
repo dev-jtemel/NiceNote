@@ -22,31 +22,23 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__HEADER_NODE_HPP
-#define NN__DS__HEADER_NODE_HPP
+#include "nn/parser/ImageParser.hpp"
 
-#include <iostream>
-#include <string>
-
-#include "nn/ds/BaseNode.hpp"
+#include "nn/ds/ImageNode.hpp"
 
 namespace nn {
-namespace ds {
+namespace parser {
 
-struct HeaderNode : public BaseNode {
-  HeaderNode(size_t tier, std::string&& content_) : BaseNode("h"), content{content_} {
-    token.append(std::to_string(tier));
+ImageParser::ImageParser() : BaseParser(R"(^!\[([^[\]]*)\]\(([^)]*)\)$)") {}
+
+std::shared_ptr<ds::BaseNode> ImageParser::attemptParse(
+    const std::string& line) {
+  if (std::regex_search(line, m_match, m_regex)) {
+    return std::make_shared<ds::ImageNode>(std::move(m_match[1]),
+                                           std::move(m_match[2]));
   }
+  return nullptr;
+}
 
-  std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << ">" << content << "</" << token << ">"
-                  << std::endl;
-  }
-
-  std::string content{};
-};
-
-}  // namespace ds
+}  // namespace parser
 }  // namespace nn
-
-#endif  // NN__DS__HEADER_NODE_HPP

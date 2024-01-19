@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__HEADER_NODE_HPP
-#define NN__DS__HEADER_NODE_HPP
+#ifndef NN__DS__IMAGE_NODE_HPP
+#define NN__DS__IMAGE_NODE_HPP
 
 #include <iostream>
 #include <string>
@@ -33,20 +33,20 @@
 namespace nn {
 namespace ds {
 
-struct HeaderNode : public BaseNode {
-  HeaderNode(size_t tier, std::string&& content_) : BaseNode("h"), content{content_} {
-    token.append(std::to_string(tier));
-  }
+struct ImageNode : public BaseNode {
+  ImageNode(std::string&& altText_, std::string&& source_)
+      : BaseNode("img"), altText{altText_}, source{source_} {}
 
   std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << ">" << content << "</" << token << ">"
-                  << std::endl;
+    return stream << "<" << token << " alt='" << altText << "' src='" << source
+                  << "' />" << std::endl;
   }
 
-  std::string content{};
+  std::string altText{};
+  std::string source{};
 };
 
 }  // namespace ds
 }  // namespace nn
 
-#endif  // NN__DS__HEADER_NODE_HPP
+#endif  // NN__DS__IMAGE_NODE_HPP
