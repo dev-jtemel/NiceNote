@@ -22,19 +22,40 @@
  * SOFTWARE.
  */
 
-#include <iostream>
+#include <fstream>
+#include <regex>
 #include <string>
+#include <memory>
 
-#include "nn/parser/LexicalParser.hpp"
+#include "nn/ds/BaseNode.hpp"
+#include "nn/parser/HeaderParser.hpp"
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Source file missing" << std::endl;
-    return 1;
-  }
-  nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
+namespace nn {
+namespace parser {
 
-  lexicalParser.parse();
+/**
+ * @brief Read an incoming nnt source file and forward the contents of the file.
+ */
+class LexicalParser {
+ public:
+  LexicalParser(const std::string& filename);
+  ~LexicalParser();
 
-  return EXIT_SUCCESS;
-}
+  bool parse();
+
+ private:
+  void clearState();
+
+  size_t m_lineNumber{0U};
+  std::string m_line{};
+  std::unique_ptr<ds::BaseNode> m_currentNode{nullptr};
+  std::string m_content{};
+
+  std::string m_filename{};
+  std::ifstream m_stream{};
+
+  HeaderParser m_headerParser{};
+};
+
+}  // namespace parser
+}  // namespace nn

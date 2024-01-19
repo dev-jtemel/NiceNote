@@ -22,19 +22,31 @@
  * SOFTWARE.
  */
 
-#include <iostream>
+#ifndef NN__DS__HEADER_NODE_HPP
+#define NN__DS__HEADER_NODE_HPP
+
 #include <string>
 
-#include "nn/parser/LexicalParser.hpp"
+#include "nn/ds/BaseNode.hpp"
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Source file missing" << std::endl;
-    return 1;
+namespace nn {
+namespace ds {
+
+struct HeaderNode : public BaseNode {
+  HeaderNode(size_t tier, std::string&& content_) : content{content_} {
+    token.append(std::to_string(tier));
   }
-  nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
 
-  lexicalParser.parse();
+  std::ostream& toHTML(std::ostream& stream) override {
+    return stream << "<" << token << ">" << content << "</" << token << ">"
+                  << std::endl;
+  }
 
-  return EXIT_SUCCESS;
-}
+  std::string token{"h"};
+  std::string content{};
+};
+
+}  // namespace ds
+}  // namespace nn
+
+#endif  // NN__DS__HEADER_NODE_HPP

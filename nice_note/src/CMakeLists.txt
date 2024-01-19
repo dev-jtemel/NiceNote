@@ -1,3 +1,5 @@
+file(GLOB_RECURSE SOURCE_FILES "*.cpp")
+
 add_executable(nice_note
-  main.cpp
+  ${SOURCE_FILES}
 )

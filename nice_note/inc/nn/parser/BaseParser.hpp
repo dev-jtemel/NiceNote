@@ -22,19 +22,34 @@
  * SOFTWARE.
  */
 
-#include <iostream>
+#ifndef NN__PARSER__BASE_PARSER__HPP
+#define NN__PARSER__BASE_PARSER__HPP
+
+#include <memory>
+#include <regex>
 #include <string>
 
-#include "nn/parser/LexicalParser.hpp"
+#include "nn/ds/BaseNode.hpp"
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Source file missing" << std::endl;
-    return 1;
-  }
-  nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
+namespace nn {
+namespace parser {
 
-  lexicalParser.parse();
+class BaseParser {
+ public:
+  BaseParser() = default;
+  BaseParser(std::string&& regex) : m_regex(regex){};
 
-  return EXIT_SUCCESS;
-}
+  virtual ~BaseParser() = default;
+
+  virtual std::shared_ptr<ds::BaseNode> attemptParse(
+      const std::string& line) = 0;
+
+ protected:
+  std::regex m_regex{};
+  std::smatch m_match{};
+};
+
+}  // namespace parser
+}  // namespace nn
+
+#endif  // NN__PARSER__BASE_PARSER__HPP

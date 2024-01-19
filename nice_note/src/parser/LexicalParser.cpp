@@ -22,19 +22,39 @@
  * SOFTWARE.
  */
 
-#include <iostream>
-#include <string>
-
 #include "nn/parser/LexicalParser.hpp"
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Source file missing" << std::endl;
-    return 1;
+#include <iostream>
+#include <regex>
+#include <stdexcept>
+
+#include "nn/ds/HeaderNode.hpp"
+
+namespace nn {
+namespace parser {
+
+LexicalParser::LexicalParser(const std::string& filename)
+    : m_filename(filename), m_stream(filename) {
+  if (!m_stream.is_open()) {
+    throw std::runtime_error("Failed to open " + m_filename);
   }
-  nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
-
-  lexicalParser.parse();
-
-  return EXIT_SUCCESS;
 }
+
+LexicalParser::~LexicalParser() { m_stream.close(); }
+
+bool LexicalParser::parse() {
+  while (std::getline(m_stream, m_line)) {
+    ++m_lineNumber;
+    std::cout << "[" << m_lineNumber << "] " << m_line << std::endl;
+
+    auto newNode = m_headerParser.attemptParse(m_line);
+    if (newNode) {
+      newNode->toHTML(std::cout);
+    }
+  }
+
+  return true;
+}
+
+}  // namespace parser
+}  // namespace nn

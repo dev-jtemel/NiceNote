@@ -22,19 +22,23 @@
  * SOFTWARE.
  */
 
-#include <iostream>
-#include <string>
+#include "nn/parser/HeaderParser.hpp"
 
-#include "nn/parser/LexicalParser.hpp"
+#include "nn/ds/HeaderNode.hpp"
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Source file missing" << std::endl;
-    return 1;
+namespace nn {
+namespace parser {
+
+HeaderParser::HeaderParser() : BaseParser(R"((#{1,6})\s+(.*))") {}
+
+std::shared_ptr<ds::BaseNode> HeaderParser::attemptParse(
+    const std::string& line) {
+  if (std::regex_search(line, m_match, m_regex)) {
+    return std::make_shared<ds::HeaderNode>(
+        static_cast<size_t>(m_match[1].str().size()), std::move(m_match[2]));
   }
-  nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
-
-  lexicalParser.parse();
-
-  return EXIT_SUCCESS;
+  return nullptr;
 }
+
+}  // namespace parser
+}  // namespace nn

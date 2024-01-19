@@ -22,19 +22,25 @@
  * SOFTWARE.
  */
 
-#include <iostream>
+#ifndef NN__DS__BASE_NODE_HPP
+#define NN__DS__BASE_NODE_HPP
+
+#include <ostream>
+#include <regex>
 #include <string>
 
-#include "nn/parser/LexicalParser.hpp"
+namespace nn {
+namespace ds {
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Source file missing" << std::endl;
-    return 1;
+struct BaseNode {
+  virtual ~BaseNode() {}
+
+  virtual std::ostream& toHTML(std::ostream& stream) {
+    return stream << "TODO" << std::endl;
   }
-  nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
+};
 
-  lexicalParser.parse();
+}  // namespace ds
+}  // namespace nn
 
-  return EXIT_SUCCESS;
-}
+#endif  // NN__DS__BASE_NODE_HPP
