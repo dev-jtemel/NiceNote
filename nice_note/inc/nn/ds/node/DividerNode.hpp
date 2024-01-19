@@ -46,6 +46,10 @@ struct DividerNode : public BaseNode {
   std::ostream& toHTML(std::ostream& stream) override {
     return stream << "<" << token << " />" << std::endl;
   }
+
+  std::ostream& dump(std::ostream& stream) override{
+    return stream << "{ DividerNode }" << std::endl;
+  }
 };
 
 }  // namespace node

@@ -58,14 +58,16 @@ bool LexicalParser::parse() {
   return true;
 }
 
-void LexicalParser::dumpNNTree(std::ostream& out) {
+void LexicalParser::writeNNTree(std::ostream& out) {
+  m_tree.dump();
+
   while (true) {
     auto node = m_tree.popNode();
     if (!node) {
       return;
     }
 
-    node->toHTML(std::cout);
+    node->toHTML(out);
   }
 }
 

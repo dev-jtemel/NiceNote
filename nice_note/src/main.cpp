@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   nn::parser::LexicalParser lexicalParser{std::string(argv[1])};
 
   lexicalParser.parse();
-  lexicalParser.dumpNNTree(std::cout);
+  lexicalParser.writeNNTree(std::cout);
 
   return EXIT_SUCCESS;
 }

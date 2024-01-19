@@ -55,7 +55,7 @@ class LexicalParser {
   /**
    * @brief Dump the NiceNote tree to the stream.
    */
-  void dumpNNTree(std::ostream& out);
+  void writeNNTree(std::ostream& out);
 
  private:
   size_t m_lineNumber{0U};

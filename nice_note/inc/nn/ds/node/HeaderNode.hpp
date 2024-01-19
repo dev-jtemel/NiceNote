@@ -56,6 +56,11 @@ struct HeaderNode : public BaseNode {
                   << std::endl;
   }
 
+  std::ostream& dump(std::ostream& stream) override {
+    return stream << "{ HeaderNode | tier=" << token.back() << ", content="
+                  << content << " }" << std::endl;
+  }
+
   std::string content{};
 };
 

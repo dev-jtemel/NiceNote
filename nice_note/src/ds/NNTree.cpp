@@ -22,48 +22,39 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__NNTREE_HPP
-#define NN__DS__NNTREE_HPP
-
-#include <iostream>
-#include <memory>
-
-#include "nn/ds/node/BaseNode.hpp"
+#include "nn/ds/NNTree.hpp"
 
 namespace nn {
 namespace ds {
 
-/**
- * @brief Stores a AST that is constructed from the given NiceNoteText source
- * file.
- */
-class NNTree {
- public:
-  NNTree() = default;
-  ~NNTree() = default;
+void NNTree::insertNode(std::shared_ptr<node::BaseNode>& node) {
+  if (!m_head) {
+    m_head = node;
+    m_current = node;
+    return;
+  }
 
-  /**
-   * @brief Append a node to the end of the NNTree.
-   * @param node The node to append.
-   */
-  void insertNode(std::shared_ptr<node::BaseNode>& node);
+  m_current->next = node;
+  m_current = m_current->next;
+}
 
-  /**
-   * @brief Pop and return the current head of the NNTree. This progresses the
-   * head of the NNTree by one node.
-   * @return std::shared_ptr<node::BaseNode> The current head.
-   */
-  std::shared_ptr<node::BaseNode> popNode();
+std::shared_ptr<node::BaseNode> NNTree::popNode() {
+  if (!m_head) {
+    return nullptr;
+  }
 
+  auto oldHead = m_head;
+  m_head = m_head->next;
+  return oldHead;
+}
 
-  void dump() const;
-
- private:
-  std::shared_ptr<node::BaseNode> m_head{nullptr};
-  std::shared_ptr<node::BaseNode> m_current{nullptr};
-};
+void NNTree::dump() const {
+  auto head = m_head;
+  while (head) {
+    head->dump(std::cerr);
+    head = head->next;
+  }
+}
 
 }  // namespace ds
 }  // namespace nn
-
-#endif  // NN__DS__NNTREE_HPP

@@ -49,6 +49,11 @@ struct ImageNode : public BaseNode {
                   << "' />" << std::endl;
   }
 
+  std::ostream& dump(std::ostream& stream) override {
+    return stream << "{ ImageNode | alt=" << altText << ", source=" << source
+                  << " }" << std::endl;
+  }
+
   std::string altText{};
   std::string source{};
 };

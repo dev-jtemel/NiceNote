@@ -48,6 +48,11 @@ struct BaseNode {
    */
   virtual std::ostream& toHTML(std::ostream& stream) = 0;
 
+  /**
+   * @brief Dump the contents of this node for debugging.
+   */
+  virtual std::ostream& dump(std::ostream& stream) = 0;
+
   std::string token{};
   std::shared_ptr<BaseNode> next{nullptr};
 };
