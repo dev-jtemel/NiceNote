@@ -38,13 +38,7 @@ LexicalParser::LexicalParser(const std::string& filename)
   }
 }
 
-LexicalParser::~LexicalParser() {
-  m_stream.close();
-
-  for (auto& node : m_nodes) {
-    node->toHTML(std::cout);
-  }
-}
+LexicalParser::~LexicalParser() { m_stream.close(); }
 
 bool LexicalParser::parse() {
   while (std::getline(m_stream, m_line)) {
@@ -55,13 +49,24 @@ bool LexicalParser::parse() {
     for (auto& parser : m_parsers) {
       node = parser->attemptParse(m_line);
       if (node) {
-        m_nodes.emplace_back(node);
+        m_tree.insertNode(node);
         continue;
       }
     }
   }
 
   return true;
+}
+
+void LexicalParser::dumpNNTree(std::ostream& out) {
+  while (true) {
+    auto node = m_tree.popNode();
+    if (!node) {
+      return;
+    }
+
+    node->toHTML(std::cout);
+  }
 }
 
 }  // namespace parser

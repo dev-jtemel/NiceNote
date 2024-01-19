@@ -28,6 +28,8 @@
 #include <string>
 
 #include "nn/ds/node/BaseNode.hpp"
+#include "nn/ds/NNTree.hpp"
+
 #include "nn/parser/DividerParser.hpp"
 #include "nn/parser/HeaderParser.hpp"
 #include "nn/parser/ImageParser.hpp"
@@ -50,6 +52,11 @@ class LexicalParser {
    */
   bool parse();
 
+  /**
+   * @brief Dump the NiceNote tree to the stream.
+   */
+  void dumpNNTree(std::ostream& out);
+
  private:
   size_t m_lineNumber{0U};
   std::string m_line{};
@@ -63,6 +70,8 @@ class LexicalParser {
       std::make_shared<DividerParser>()};
 
   std::vector<std::shared_ptr<ds::node::BaseNode>> m_nodes{};
+
+  ds::NNTree m_tree;
 };
 
 }  // namespace parser

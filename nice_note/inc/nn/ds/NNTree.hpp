@@ -22,38 +22,53 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__BASE_NODE_HPP
-#define NN__DS__BASE_NODE_HPP
+#ifndef NN__DS__NNTREE_HPP
+#define NN__DS__NNTREE_HPP
 
-#include <ostream>
-#include <regex>
-#include <string>
+#include <iostream>
+
+#include "nn/ds/node/BaseNode.hpp"
 
 namespace nn {
 namespace ds {
-namespace node {
 
 /**
- * @brief Abstract class for representing a node in the NiceNote tree.
+ * @brief Stores a AST that is constructed from the given NiceNoteText source
+ * file.
  */
-struct BaseNode {
-  BaseNode() = default;
-  BaseNode(std::string&& token_) : token(token_) {}
-  virtual ~BaseNode() {}
+class NNTree {
+ public:
+  NNTree() = default;
+  ~NNTree() = default;
 
-  virtual void appendContent(std::string&&) {}
+  bool insertNode(std::shared_ptr<node::BaseNode>& node) {
+    if (!m_head) {
+      m_head = node;
+      m_current = node;
+      return true;
+    }
 
-  /**
-   * @brief Dump the contents of this node in HTML compliant format.
-   */
-  virtual std::ostream& toHTML(std::ostream& stream) = 0;
+    m_current->next = node;
+    m_current = m_current->next;
+    return true;
+  }
 
-  std::string token{};
-  std::shared_ptr<BaseNode> next{nullptr};
+  std::shared_ptr<node::BaseNode> popNode() {
+    if (!m_head) {
+      return nullptr;
+    }
+
+    auto oldHead = m_head;
+    m_head = m_head->next;
+    return oldHead;
+  }
+
+ private:
+  std::shared_ptr<node::BaseNode> m_head{nullptr};
+  std::shared_ptr<node::BaseNode> m_current{nullptr};
 };
 
-}  // namespace node
 }  // namespace ds
 }  // namespace nn
 
-#endif  // NN__DS__BASE_NODE_HPP
+#endif  // NN__DS__NNTREE_HPP
