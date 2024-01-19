@@ -30,6 +30,17 @@
 namespace nn {
 namespace parser {
 
+/**
+ * @brief Parse a header line.
+ * 
+ * Syntax: (range of 1-6 # preceding text)
+ *   # Header 1
+ *   ## Header 2
+ *   ### Header 3
+ *   #### Header 4
+ *   ##### Header 5
+ *   ###### Header 6
+ */
 class HeaderParser : public BaseParser {
  public:
   HeaderParser();

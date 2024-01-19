@@ -30,6 +30,14 @@
 namespace nn {
 namespace parser {
 
+/**
+ * @brief Parse horizontal lines.
+ * 
+ * Syntax: (minimum 3 chars on the same line)
+ *   ---
+ *   ***
+ *   ___ 
+ */
 class DividerParser : public BaseParser {
  public:
   DividerParser();

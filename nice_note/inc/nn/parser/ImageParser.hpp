@@ -30,6 +30,13 @@
 namespace nn {
 namespace parser {
 
+/**
+ * @brief Parse a image lines.
+ * 
+ * Syntax: (minimum 3 chars on the same line)
+ *   ![Alt Text](path/to/source)
+ *   ![Alt Text](link.to.source)
+ */
 class ImageParser : public BaseParser {
  public:
   ImageParser();

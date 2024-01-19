@@ -36,13 +36,18 @@ namespace nn {
 namespace parser {
 
 /**
- * @brief Read an incoming nnt source file and forward the contents of the file.
+ * @brief Read an incoming nnt source file and construct a NiceNote tree from
+ * the incoming lines.
  */
 class LexicalParser {
  public:
   LexicalParser(const std::string& filename);
   ~LexicalParser();
 
+  /**
+   * @brief Parse the file line by line and build the NiceNote tree.
+   * @return bool True if no errors are detected.
+   */
   bool parse();
 
  private:

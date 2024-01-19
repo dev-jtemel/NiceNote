@@ -34,6 +34,10 @@
 namespace nn {
 namespace parser {
 
+/**
+ * @brief Abstract base class for all parsers. This is used to capture and
+ * process lines of NiceNoteText.
+ */
 class BaseParser {
  public:
   BaseParser() = default;
@@ -41,6 +45,14 @@ class BaseParser {
 
   virtual ~BaseParser() = default;
 
+  /**
+   * @brief Attempt to parse a line of NiceNoteText and return the applicable
+   * node on success.
+   *
+   * @param line The line to parse.
+   * @return std::shared_ptr<ds::BaseNode> Pointer to the generated (or
+   * modified) node.
+   */
   virtual std::shared_ptr<ds::BaseNode> attemptParse(
       const std::string& line) = 0;
 
