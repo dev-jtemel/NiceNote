@@ -24,17 +24,17 @@
 
 #include "nn/parser/HeaderParser.hpp"
 
-#include "nn/ds/HeaderNode.hpp"
+#include "nn/ds/node/HeaderNode.hpp"
 
 namespace nn {
 namespace parser {
 
 HeaderParser::HeaderParser() : BaseParser(R"((#{1,6})\s+(.*))") {}
 
-std::shared_ptr<ds::BaseNode> HeaderParser::attemptParse(
+std::shared_ptr<ds::node::BaseNode> HeaderParser::attemptParse(
     const std::string& line) {
   if (std::regex_search(line, m_match, m_regex)) {
-    return std::make_shared<ds::HeaderNode>(
+    return std::make_shared<ds::node::HeaderNode>(
         static_cast<size_t>(m_match[1].str().size()), std::move(m_match[2]));
   }
   return nullptr;

@@ -22,32 +22,39 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__DIVIDER_NODE_HPP
-#define NN__DS__DIVIDER_NODE_HPP
+#ifndef NN__DS__IMAGE_NODE_HPP
+#define NN__DS__IMAGE_NODE_HPP
 
 #include <iostream>
 #include <string>
 
-#include "nn/ds/BaseNode.hpp"
+#include "nn/ds/node/BaseNode.hpp"
 
 namespace nn {
 namespace ds {
+namespace node {
 
 /**
- * @brief Represents a horizontal line.
+ * @brief Represents an image.
  *
  * Example:
- *  <hr />
+ *  <img altText='{1}' src='{2} />
  */
-struct DividerNode : public BaseNode {
-  DividerNode() : BaseNode("hr") {}
+struct ImageNode : public BaseNode {
+  ImageNode(std::string&& altText_, std::string&& source_)
+      : BaseNode("img"), altText{altText_}, source{source_} {}
 
   std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << " />" << std::endl;
+    return stream << "<" << token << " alt='" << altText << "' src='" << source
+                  << "' />" << std::endl;
   }
+
+  std::string altText{};
+  std::string source{};
 };
 
+}  // namespace node
 }  // namespace ds
 }  // namespace nn
 
-#endif  // NN__DS__DIVIDER_NODE_HPP
+#endif  // NN__DS__IMAGE_NODE_HPP

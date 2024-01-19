@@ -28,8 +28,6 @@
 #include <regex>
 #include <stdexcept>
 
-#include "nn/ds/HeaderNode.hpp"
-
 namespace nn {
 namespace parser {
 
@@ -53,7 +51,7 @@ bool LexicalParser::parse() {
     ++m_lineNumber;
     std::cerr << "[" << m_lineNumber << "] " << m_line << std::endl;
 
-    std::shared_ptr<ds::BaseNode> node{nullptr};
+    std::shared_ptr<ds::node::BaseNode> node{nullptr};
     for (auto& parser : m_parsers) {
       node = parser->attemptParse(m_line);
       if (node) {

@@ -22,35 +22,34 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__BASE_NODE_HPP
-#define NN__DS__BASE_NODE_HPP
+#ifndef NN__DS__DIVIDER_NODE_HPP
+#define NN__DS__DIVIDER_NODE_HPP
 
-#include <ostream>
-#include <regex>
+#include <iostream>
 #include <string>
+
+#include "nn/ds/node/BaseNode.hpp"
 
 namespace nn {
 namespace ds {
+namespace node {
 
 /**
- * @brief Abstract class for representing a node in the NiceNote tree.
+ * @brief Represents a horizontal line.
+ *
+ * Example:
+ *  <hr />
  */
-struct BaseNode {
-  BaseNode() = default;
-  BaseNode(std::string&& token_) : token(token_) {}
-  virtual ~BaseNode() {}
+struct DividerNode : public BaseNode {
+  DividerNode() : BaseNode("hr") {}
 
-  virtual void appendContent(std::string&&) {}
-
-  /**
-   * @brief Dump the contents of this node in HTML compliant format.
-   */
-  virtual std::ostream& toHTML(std::ostream& stream) = 0;
-
-  std::string token{};
+  std::ostream& toHTML(std::ostream& stream) override {
+    return stream << "<" << token << " />" << std::endl;
+  }
 };
 
+}  // namespace node
 }  // namespace ds
 }  // namespace nn
 
-#endif  // NN__DS__BASE_NODE_HPP
+#endif  // NN__DS__DIVIDER_NODE_HPP

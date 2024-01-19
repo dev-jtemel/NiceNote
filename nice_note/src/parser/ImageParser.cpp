@@ -24,17 +24,17 @@
 
 #include "nn/parser/ImageParser.hpp"
 
-#include "nn/ds/ImageNode.hpp"
+#include "nn/ds/node/ImageNode.hpp"
 
 namespace nn {
 namespace parser {
 
 ImageParser::ImageParser() : BaseParser(R"(^!\[([^[\]]*)\]\(([^)]*)\)$)") {}
 
-std::shared_ptr<ds::BaseNode> ImageParser::attemptParse(
+std::shared_ptr<ds::node::BaseNode> ImageParser::attemptParse(
     const std::string& line) {
   if (std::regex_search(line, m_match, m_regex)) {
-    return std::make_shared<ds::ImageNode>(std::move(m_match[1]),
+    return std::make_shared<ds::node::ImageNode>(std::move(m_match[1]),
                                            std::move(m_match[2]));
   }
   return nullptr;

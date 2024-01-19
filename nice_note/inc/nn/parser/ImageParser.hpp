@@ -42,7 +42,7 @@ class ImageParser : public BaseParser {
   ImageParser();
   ~ImageParser() = default;
 
-  std::shared_ptr<ds::BaseNode> attemptParse(const std::string& line) override;
+  std::shared_ptr<ds::node::BaseNode> attemptParse(const std::string& line) override;
 };
 
 }  // namespace parser

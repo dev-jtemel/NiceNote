@@ -28,10 +28,11 @@
 #include <iostream>
 #include <string>
 
-#include "nn/ds/BaseNode.hpp"
+#include "nn/ds/node/BaseNode.hpp"
 
 namespace nn {
 namespace ds {
+namespace node {
 
 /**
  * @brief Represents a heading from level 1 - 6.
@@ -45,7 +46,8 @@ namespace ds {
  *  <h6>6</h6>
  */
 struct HeaderNode : public BaseNode {
-  HeaderNode(size_t tier, std::string&& content_) : BaseNode("h"), content{content_} {
+  HeaderNode(size_t tier, std::string&& content_)
+      : BaseNode("h"), content{content_} {
     token.append(std::to_string(tier));
   }
 
@@ -57,6 +59,7 @@ struct HeaderNode : public BaseNode {
   std::string content{};
 };
 
+}  // namespace node
 }  // namespace ds
 }  // namespace nn
 

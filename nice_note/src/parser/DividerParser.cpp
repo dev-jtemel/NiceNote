@@ -24,17 +24,17 @@
 
 #include "nn/parser/DividerParser.hpp"
 
-#include "nn/ds/DividerNode.hpp"
+#include "nn/ds/node/DividerNode.hpp"
 
 namespace nn {
 namespace parser {
 
 DividerParser::DividerParser() : BaseParser(R"(^[-*_]{3,}$)") {}
 
-std::shared_ptr<ds::BaseNode> DividerParser::attemptParse(
+std::shared_ptr<ds::node::BaseNode> DividerParser::attemptParse(
     const std::string& line) {
   if (std::regex_search(line, m_match, m_regex)) {
-    return std::make_shared<ds::DividerNode>();
+    return std::make_shared<ds::node::DividerNode>();
   }
   return nullptr;
 }

@@ -27,7 +27,7 @@
 #include <regex>
 #include <string>
 
-#include "nn/ds/BaseNode.hpp"
+#include "nn/ds/node/BaseNode.hpp"
 #include "nn/parser/DividerParser.hpp"
 #include "nn/parser/HeaderParser.hpp"
 #include "nn/parser/ImageParser.hpp"
@@ -62,7 +62,7 @@ class LexicalParser {
       std::make_shared<HeaderParser>(), std::make_shared<ImageParser>(),
       std::make_shared<DividerParser>()};
 
-  std::vector<std::shared_ptr<ds::BaseNode>> m_nodes{};
+  std::vector<std::shared_ptr<ds::node::BaseNode>> m_nodes{};
 };
 
 }  // namespace parser

@@ -29,7 +29,7 @@
 #include <regex>
 #include <string>
 
-#include "nn/ds/BaseNode.hpp"
+#include "nn/ds/node/BaseNode.hpp"
 
 namespace nn {
 namespace parser {
@@ -53,7 +53,7 @@ class BaseParser {
    * @return std::shared_ptr<ds::BaseNode> Pointer to the generated (or
    * modified) node.
    */
-  virtual std::shared_ptr<ds::BaseNode> attemptParse(
+  virtual std::shared_ptr<ds::node::BaseNode> attemptParse(
       const std::string& line) = 0;
 
  protected:

@@ -22,37 +22,37 @@
  * SOFTWARE.
  */
 
-#ifndef NN__DS__IMAGE_NODE_HPP
-#define NN__DS__IMAGE_NODE_HPP
+#ifndef NN__DS__BASE_NODE_HPP
+#define NN__DS__BASE_NODE_HPP
 
-#include <iostream>
+#include <ostream>
+#include <regex>
 #include <string>
-
-#include "nn/ds/BaseNode.hpp"
 
 namespace nn {
 namespace ds {
+namespace node {
 
 /**
- * @brief Represents an image.
- *
- * Example:
- *  <img altText='{1}' src='{2} />
+ * @brief Abstract class for representing a node in the NiceNote tree.
  */
-struct ImageNode : public BaseNode {
-  ImageNode(std::string&& altText_, std::string&& source_)
-      : BaseNode("img"), altText{altText_}, source{source_} {}
+struct BaseNode {
+  BaseNode() = default;
+  BaseNode(std::string&& token_) : token(token_) {}
+  virtual ~BaseNode() {}
 
-  std::ostream& toHTML(std::ostream& stream) override {
-    return stream << "<" << token << " alt='" << altText << "' src='" << source
-                  << "' />" << std::endl;
-  }
+  virtual void appendContent(std::string&&) {}
 
-  std::string altText{};
-  std::string source{};
+  /**
+   * @brief Dump the contents of this node in HTML compliant format.
+   */
+  virtual std::ostream& toHTML(std::ostream& stream) = 0;
+
+  std::string token{};
 };
 
+}  // namespace node
 }  // namespace ds
 }  // namespace nn
 
-#endif  // NN__DS__IMAGE_NODE_HPP
+#endif  // NN__DS__BASE_NODE_HPP
