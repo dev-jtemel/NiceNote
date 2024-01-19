@@ -32,6 +32,9 @@
 namespace nn {
 namespace ds {
 
+/**
+ * @brief Abstract class for representing a node in the NiceNote tree.
+ */
 struct BaseNode {
   BaseNode() = default;
   BaseNode(std::string&& token_) : token(token_) {}
@@ -39,6 +42,9 @@ struct BaseNode {
 
   virtual void appendContent(std::string&&) {}
 
+  /**
+   * @brief Dump the contents of this node in HTML compliant format.
+   */
   virtual std::ostream& toHTML(std::ostream& stream) = 0;
 
   std::string token{};

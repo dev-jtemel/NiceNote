@@ -33,6 +33,12 @@
 namespace nn {
 namespace ds {
 
+/**
+ * @brief Represents an image.
+ *
+ * Example:
+ *  <img altText='{1}' src='{2} />
+ */
 struct ImageNode : public BaseNode {
   ImageNode(std::string&& altText_, std::string&& source_)
       : BaseNode("img"), altText{altText_}, source{source_} {}

@@ -33,6 +33,17 @@
 namespace nn {
 namespace ds {
 
+/**
+ * @brief Represents a heading from level 1 - 6.
+ *
+ * Example:
+ *  <h1>1</h1>
+ *  <h2>2</h2
+ *  <h3>3</h3>
+ *  <h4>4</h4>
+ *  <h5>5</h5>
+ *  <h6>6</h6>
+ */
 struct HeaderNode : public BaseNode {
   HeaderNode(size_t tier, std::string&& content_) : BaseNode("h"), content{content_} {
     token.append(std::to_string(tier));

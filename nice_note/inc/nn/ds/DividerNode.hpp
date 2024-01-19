@@ -33,6 +33,12 @@
 namespace nn {
 namespace ds {
 
+/**
+ * @brief Represents a horizontal line.
+ *
+ * Example:
+ *  <hr />
+ */
 struct DividerNode : public BaseNode {
   DividerNode() : BaseNode("hr") {}
 
